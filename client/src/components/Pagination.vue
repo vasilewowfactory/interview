@@ -65,6 +65,7 @@ export default defineComponent({
         box-sizing: border-box;
         display: flex;
         align-items: center;
+        margin-bottom: 2rem;
         @include border-radius(0.75em);
 
         &__button {

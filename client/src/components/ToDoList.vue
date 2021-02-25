@@ -82,11 +82,9 @@ export default defineComponent({
       this.toDoItems.forEach((totDo) => {
         if (totDo._id === response._id) {
           const item = calculateDiffDate(totDo);
-
           return Object.assign(item, response);
         }
       });
-      this.filteredToDoItems = this.toDoItems;
     },
 
     // Delete to do
