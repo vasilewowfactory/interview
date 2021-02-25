@@ -31,7 +31,7 @@
         justify-content: flex-start;
         align-items: center;
         min-height: 40px;
-        padding: 5px 35px 5px 0;
+        padding: 0.34em 2.18em 0.34em 0;
         &--done {
             text-decoration-line: line-through;
             color: #AEAEAE
@@ -39,10 +39,10 @@
 
         &__remove{
             position: absolute;
-            right: 15px;
+            right: 0.93em;
             top: 50%;
             display: none;
-            @extend .transformY;
+            @include translateY(-50%);
         }
 
         &:hover .element__remove {
@@ -51,14 +51,14 @@
 
         &__label {
             position: relative;
-            padding-left: 55px;
+            padding-left: 3.43em;
             &:before {
                 content: "";
                 position: absolute;
                 height: 40px;
                 width: 40px;
                 top: 50%;
-                @extend .transformY;
+                @include translateY(-50%);
             }
         }
 
@@ -68,19 +68,19 @@
 
         &__label:before {
             background: url('../assets/images/unchecked.png') left center no-repeat;
-            left: 12px;
+            left: 0.75em;
         }
 
         &__input[type=checkbox]:checked + &__label:before {
             background: url('../assets/images/checked.png') left center no-repeat;
-            left: 5px;
+            left: 0.31em;
         }
 
         &__time {
             font-weight: 300;
-            font-size: 10px;
+            font-size: 0.63rem;
             color: $grey2;
-            margin-left: 5px;
+            margin-left: 0.31em;
         }
     }
 </style>

@@ -56,14 +56,14 @@
         background: $white;
         border: 1px solid rgba(0, 0, 0, 0.17);
         box-sizing: border-box;
-        border-radius: 12px;
         display: flex;
         align-items: center;
+        @include border-radius(0.75em);
 
         &__button {
             border: none;
             background: none;
-            padding: 8px 12px 6px 12px;
+            padding: 0.5em 0.75em 0.37em 0.75em;
         }
     }
 

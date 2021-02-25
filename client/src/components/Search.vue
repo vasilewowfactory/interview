@@ -40,21 +40,21 @@ import {ToDo} from "@/interfaces";
 <style lang="scss" scoped>
     @import "../assets/scss/global";
     .search{
-        margin-top: 20px;
+        margin-top: 1.25em;
         position: relative;
         &__icon{
             position: absolute;
-            top: 8px;
-            left: 7px;
+            top: 0.5em;
+            left: 0.43em;
         }
         &__input{
             background: $gray;
-            border-radius: 12px;
             width: 100%;
             min-height: 32px;
             border: none;
-            padding-left: 29px;
-            font-size: 16px;
+            padding-left: 1.8em;
+            font-size: 1em;
+            @include border-radius(0.75em);
             &:focus{
                 outline: none;
             }

@@ -1,6 +1,6 @@
 <template lang="pug">
   #app.todo-app
-      div.flex-container
+      div.container
          to-do-list
 </template>
 
@@ -18,5 +18,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@import "assets/scss/global";
+    @import "assets/scss/global";
 </style>

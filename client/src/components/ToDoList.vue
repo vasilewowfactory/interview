@@ -107,23 +107,23 @@
     @import "../assets/scss/global";
     .list{
         background-color: $white;
-        border: 1px solid rgba(0, 0, 0, 0.17);
+        border: 0.06em solid rgba(0, 0, 0, 0.17);
         box-sizing: border-box;
-        border-radius: 12px;
+        @include border-radius(0.75em);
         padding-left: 0;
         &__item{
             list-style-type: none;
-            border-bottom: 1px solid #c6c6c6;
+            border-bottom: 0.06em solid #c6c6c6;
             position: relative;
 
             &:first-child {
                 min-height: 50px;
-                line-height: 40px;
-                padding: 5px 13px 5px 20px;
+                line-height: 2.5em;
+                padding: 0.32em 0.82em 0.32em 1.25em;
                 display: flex;
                 align-items: center;
                 p {
-                    font-size: 16px;
+                    font-size: 1rem;
                     color: #A8A8A8;
                     font-weight: 400;
                 }
@@ -139,8 +139,8 @@
     .no-items{
         text-align: center;
         background: $white;
-        padding: 10px;
-        margin-bottom: 11px;
-        border-radius: 12px;
+        padding: 0.62em;
+        margin-bottom: 0.68em;
+        @include border-radius(0.75em);
     }
 </style>
