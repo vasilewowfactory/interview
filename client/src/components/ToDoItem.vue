@@ -1,0 +1,86 @@
+<template lang="pug">
+    div.element.cursor-pointer(@click="$emit('updateItem', item)")
+        input.element__input(type='checkbox', :name="'check_' + item._id", :id='item._id', :value='item._id', :checked="item.done")
+        label.element__label.cursor-pointer(:for='item._id')
+            span(:class="{'element--done': item.done}") {{item.description}}
+            small.element__time(v-if="item.diffDate > 0") - {{item.diffDate}} minute{{item.diffDate > 1 ? 's' : ''}}
+        span.element__remove.cursor-pointer(@click="$emit('deleteItem',item)")
+            img(src="../assets/images/remove.png")
+</template>
+
+<script lang="ts">
+/* eslint-disable */
+    import {defineComponent, PropType} from '@vue/composition-api';
+    import {ToDo} from "@/interfaces";
+
+    export default defineComponent({
+        name: "ToDoItem",
+        props: {
+            item: {
+                type: Object as PropType<ToDo>
+            }
+        },
+        emits: ['updateItem', 'deleteItem']
+    });
+</script>
+
+<style lang="scss" scoped>
+    @import "../assets/scss/global";
+    .element {
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        min-height: 40px;
+        padding: 5px 35px 5px 0;
+        &--done {
+            text-decoration-line: line-through;
+            color: #AEAEAE
+        }
+
+        &__remove{
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            display: none;
+            @extend .transformY;
+        }
+
+        &:hover .element__remove {
+            display: block;
+        }
+
+        &__label {
+            position: relative;
+            padding-left: 55px;
+            &:before {
+                content: "";
+                position: absolute;
+                height: 40px;
+                width: 40px;
+                top: 50%;
+                @extend .transformY;
+            }
+        }
+
+        &__input[type=checkbox] {
+            display: none;
+        }
+
+        &__label:before {
+            background: url('../assets/images/unchecked.png') left center no-repeat;
+            left: 12px;
+        }
+
+        &__input[type=checkbox]:checked + &__label:before {
+            background: url('../assets/images/checked.png') left center no-repeat;
+            left: 5px;
+        }
+
+        &__time {
+            font-weight: 300;
+            font-size: 10px;
+            color: $grey2;
+            margin-left: 5px;
+        }
+    }
+</style>

@@ -4,5 +4,5 @@ export interface ToDo {
     done: boolean,
     createdAt: string,
     updatedAt: string,
-    diffDate?: any
+    diffDate?: string | number
 }
