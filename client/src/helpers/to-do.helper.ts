@@ -5,8 +5,9 @@ export const addDiffDateToItems = (items: ToDo[]) => items.map((item: ToDo) => c
 export const calculateDiffDate = (item: ToDo) => {
   const createdAt = new Date(item.createdAt);
   const updatedAt = new Date(item.updatedAt);
-  const time: any = (updatedAt.getTime() - createdAt.getTime());
+  const time: number = (updatedAt.getTime() - createdAt.getTime());
 
   item.diffDate = Math.round(time / 60000);
   return item;
 };
+

@@ -9,44 +9,51 @@
 
 <script lang="ts">
 /* eslint-disable */
-    import {defineComponent} from '@vue/composition-api';
+import { defineComponent, PropType } from '@vue/composition-api';
 
-    export default defineComponent({
-        name: "Pagination",
-        props: {
-            metaPagination: {type: Object, require:true}
-        },
-        emits:['changePage'],
-        setup(props){
-            const params = { page: 1, offset: 0, limit: 10 };
-            return {
-                params,
-                props
-            }
-        },
-        methods:{
-            nextOrPrevPage(type: string){
-                const metaValue: any = this.props.metaPagination;
+import { MetaPagination, MetaParams } from '@/interfaces';
 
-                if (metaValue.page === 1 && type === 'prev') {
-                    return;
-                }
+export default defineComponent({
+  name: 'Pagination',
+  props: {
+    metaPagination: { type: (Object as PropType<MetaPagination>), require: true },
+  },
+  emits: ['changePage'],
+  setup(props) {
+    const params: MetaParams = { page: 1, offset: 0, limit: 20 };
 
-                if (!metaValue.hasNextPage && type === 'next') {
-                    return;
-                }
+    return {
+      params,
+      props,
+    };
+  },
+  methods: {
+    nextOrPrevPage(type: string) {
+      const metaValue = this.props.metaPagination;
 
-                if (type === 'next') {
-                    this.params.page = parseInt(metaValue.page) + 1;
-                } else {
-                    this.params.page = parseInt(metaValue.page) - 1;
-                }
+      if (!metaValue) {
+        return;
+      }
 
-                this.params.offset = (this.params.page - 1) * metaValue.limit + 1;
-                this.$emit('changePage', this.params);
-            }
-        }
-    })
+      if (metaValue.page === 1 && type === 'prev') {
+        return;
+      }
+
+      if (!metaValue.hasNextPage && type === 'next') {
+        return;
+      }
+
+      if (type === 'next') {
+        this.params.page = metaValue.page + 1;
+      } else {
+        this.params.page = metaValue.page - 1;
+      }
+
+      this.params.offset = (this.params.page - 1) * metaValue.limit + 1;
+      this.$emit('changePage', this.params);
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -54,7 +61,7 @@
     .pagination {
         float: right;
         background: $white;
-        border: 1px solid rgba(0, 0, 0, 0.17);
+        border: 0.06em solid rgba(0, 0, 0, 0.17);
         box-sizing: border-box;
         display: flex;
         align-items: center;

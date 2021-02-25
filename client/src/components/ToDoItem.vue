@@ -10,18 +10,19 @@
 
 <script lang="ts">
 /* eslint-disable */
-    import {defineComponent, PropType} from '@vue/composition-api';
-    import {ToDo} from "@/interfaces";
+import { defineComponent, PropType } from '@vue/composition-api';
 
-    export default defineComponent({
-        name: "ToDoItem",
-        props: {
-            item: {
-                type: Object as PropType<ToDo>
-            }
-        },
-        emits: ['updateItem', 'deleteItem']
-    });
+import { ToDo } from '@/interfaces';
+
+export default defineComponent({
+  name: 'ToDoItem',
+  props: {
+    item: {
+      type: Object as PropType<ToDo>,
+    },
+  },
+  emits: ['updateItem', 'deleteItem'],
+});
 </script>
 
 <style lang="scss" scoped>
@@ -30,11 +31,11 @@
         display: flex;
         justify-content: flex-start;
         align-items: center;
-        min-height: 40px;
-        padding: 0.34em 2.18em 0.34em 0;
+        min-height: 2.5rem;
+        padding: 0.4em 2.18em 0.4em 0;
         &--done {
             text-decoration-line: line-through;
-            color: #AEAEAE
+            color: $greyLight
         }
 
         &__remove{
@@ -55,8 +56,8 @@
             &:before {
                 content: "";
                 position: absolute;
-                height: 40px;
-                width: 40px;
+                height: 2.5rem;
+                width: 2.5rem;
                 top: 50%;
                 @include translateY(-50%);
             }
@@ -79,7 +80,7 @@
         &__time {
             font-weight: 300;
             font-size: 0.63rem;
-            color: $grey2;
+            color: $greyStrong;
             margin-left: 0.31em;
         }
     }

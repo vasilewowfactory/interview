@@ -6,35 +6,42 @@
 
 <script lang="ts">
 /* eslint-disable */
-    import {defineComponent, ref, Ref, PropType} from '@vue/composition-api';
-import {ToDo} from "@/interfaces";
+import {
+  defineComponent, ref, Ref, PropType,
+} from '@vue/composition-api';
 
-    export default defineComponent({
-        name: "Search",
-        props: {
-            filterableItems: {type: Array as PropType<ToDo[]>, require:true},
-        },
-        emits:['filterItems'],
-        setup(props){
-            const searchValue: Ref<string> = ref('');
-            return {
-                searchValue,
-                props
-            }
-        },
-        methods:{
-            filterItems () {
-                const searchItem = this.searchValue.toLowerCase();
-                if (!searchItem && searchItem.trim() === '') {
-                    this.$emit('filterItems', this.filterableItems);
-                    return;
-                }
-                const resultItems = (this.filterableItems as ToDo[]).filter((item) => (item.description.toLowerCase().indexOf(searchItem.toLowerCase()) > -1));
-                this.$emit('filterItems',resultItems);
-            }
+import { ToDo } from '@/interfaces';
 
-        }
-    })
+export default defineComponent({
+  name: 'Search',
+  props: {
+    filterableItems: { type: Array as PropType<ToDo[]>, require: true },
+  },
+  emits: ['filterItems'],
+  setup(props) {
+    const searchValue: Ref<string> = ref('');
+
+    return {
+      searchValue,
+      props,
+    };
+  },
+  methods: {
+    filterItems() {
+      const searchItem = this.searchValue.toLowerCase();
+
+      if (!searchItem && searchItem.trim() === '') {
+        this.$emit('filterItems', this.filterableItems);
+        return;
+      }
+
+      const resultItems = (this.filterableItems as ToDo[]).filter((item) => (item.description.toLowerCase().indexOf(searchItem.toLowerCase()) > -1));
+
+      this.$emit('filterItems', resultItems);
+    },
+
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -50,7 +57,7 @@ import {ToDo} from "@/interfaces";
         &__input{
             background: $gray;
             width: 100%;
-            min-height: 32px;
+            min-height: 2rem;
             border: none;
             padding-left: 1.8em;
             font-size: 1em;

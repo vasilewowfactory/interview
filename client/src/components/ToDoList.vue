@@ -14,93 +14,96 @@
 
 <script lang="ts">
 /* eslint-disable */
-    import {defineComponent, ref, Ref} from '@vue/composition-api';
-    import Search from './Search.vue';
-    import Pagination from './Pagination.vue';
-    import ToDoItem from './ToDoItem.vue';
-    import {ToDo} from '@/interfaces';
-    import ToDoService from '../services/to-do.service';
-    import {addDiffDateToItems, calculateDiffDate} from '@/helpers/to-do.helper';
+import { defineComponent, ref, Ref } from '@vue/composition-api';
 
-    export default defineComponent({
-        name: "ToDoList",
-        components: {Search, ToDoItem, Pagination},
-        setup() {
-            const toDoItems: Ref<ToDo[]> = ref([]);
-            const filteredToDoItems: Ref<ToDo[]> = ref([]);
-            const metaPagination: Ref<any> = ref({});
-            const searchValue: Ref<string> = ref('');
+import { addDiffDateToItems, calculateDiffDate } from '@/helpers/to-do.helper';
+import { MetaParams, ToDo } from '@/interfaces';
 
-            // Get all to do list
-            const fetchToDoList = (params?: object) => {
-                ToDoService.getToDoList(params).then((data) => {
-                    const response = data.data;
-                    filteredToDoItems.value = toDoItems.value = addDiffDateToItems(response.items);
-                    metaPagination.value = response.meta;
-                }).catch((error: any) => {
-                    console.error(error);
-                });
-            };
+import ToDoService from '../services/to-do.service';
+import Pagination from './Pagination.vue';
+import Search from './Search.vue';
+import ToDoItem from './ToDoItem.vue';
 
-            fetchToDoList();
-            return {
-                toDoItems,
-                filteredToDoItems,
-                metaPagination,
-                searchValue,
-                fetchToDoList
-            };
-        },
-        methods: {
-            // Add new to do
-            addItem() {
-                const formData = {description: 'First todo'};
-                ToDoService.addItem(formData).then((data) => {
-                    this.successAdd(data.data);
-                }).catch((error: any) => {
-                    console.error(error);
-                });
-            },
+export default defineComponent({
+  name: 'ToDoList',
+  components: { Search, ToDoItem, Pagination },
+  setup() {
+    const toDoItems: Ref<ToDo[]> = ref([]);
+    const filteredToDoItems: Ref<ToDo[]> = ref([]);
+    const metaPagination = ref({});
 
-            successAdd(response: ToDo){
-                this.toDoItems.unshift(response);
-                this.filteredToDoItems = this.toDoItems;
-            },
+    // Get all to do list
+    const fetchToDoList = (params?: MetaParams) => {
+      ToDoService.getToDoList(params).then((data) => {
+        const response = data.data;
 
-            // Update to do
-            updateItem(item: ToDo) {
-                ToDoService.updateItem(item._id, !item.done).then((data) => {
-                    this.successUpdate(data.data);
-                }).catch((error: any) => {
-                    console.error(error);
-                });
-            },
+        filteredToDoItems.value = toDoItems.value = addDiffDateToItems(response.items);
+        metaPagination.value = response.meta;
+      }).catch((error) => {
+        console.error(error);
+      });
+    };
 
-            successUpdate(response:ToDo){
-                this.toDoItems.forEach((totDo) => {
-                    if (totDo._id === response._id) {
-                        const item = calculateDiffDate(totDo);
-                        return Object.assign(item, response);
-                    }
-                });
-                this.filteredToDoItems = this.toDoItems;
-            },
+    fetchToDoList();
+    return {
+      toDoItems,
+      filteredToDoItems,
+      metaPagination,
+      fetchToDoList,
+    };
+  },
+  methods: {
+    // Add new to do
+    addItem() {
+      const description = 'First todo';
 
-            // Delete to do
-            deleteItem(item: ToDo){
-                ToDoService.deleteItem(item._id).then(() => {
-                    this.successDelete(item);
-                }).catch((error: any) => {
-                    console.error(error);
-                });
-            },
+      ToDoService.addItem(description).then((data) => {
+        this.successAdd(data.data);
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
 
-            successDelete(response: ToDo){
-                this.toDoItems = this.toDoItems.filter((toDoItem: { _id: string | number; }) => toDoItem._id !== response._id);
-                this.filteredToDoItems = this.toDoItems;
-            }
+    successAdd(response: ToDo) {
+      this.toDoItems.unshift(response);
+      this.filteredToDoItems = this.toDoItems;
+    },
+
+    // Update to do
+    updateItem(item: ToDo) {
+      ToDoService.updateItem(item._id, !item.done).then((data) => {
+        this.successUpdate(data.data);
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+
+    successUpdate(response:ToDo) {
+      this.toDoItems.forEach((totDo) => {
+        if (totDo._id === response._id) {
+          const item = calculateDiffDate(totDo);
+
+          return Object.assign(item, response);
         }
-    })
+      });
+      this.filteredToDoItems = this.toDoItems;
+    },
+
+    // Delete to do
+    deleteItem(item: ToDo) {
+      ToDoService.deleteItem(item._id).then(() => {
+        this.successDelete(item);
+      }).catch((error) => {
+        console.error(error);
+      });
+    },
+
+    successDelete(response: ToDo) {
+      this.toDoItems = this.toDoItems.filter((toDoItem: { _id: string | number; }) => toDoItem._id !== response._id);
+      this.filteredToDoItems = this.toDoItems;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -113,11 +116,11 @@
         padding-left: 0;
         &__item{
             list-style-type: none;
-            border-bottom: 0.06em solid #c6c6c6;
+            border-bottom: 0.06em solid $greyLight2;
             position: relative;
 
             &:first-child {
-                min-height: 50px;
+                min-height: 3.13rem;
                 line-height: 2.5em;
                 padding: 0.32em 0.82em 0.32em 1.25em;
                 display: flex;
